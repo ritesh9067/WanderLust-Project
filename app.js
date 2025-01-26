@@ -16,6 +16,7 @@ const Review =require("./models/review.js");
 
 //requiring session
 const session  =require("express-session");
+const MongoStore = require("connect-mongo");
 
 //requiring passport
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -59,12 +60,14 @@ app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
+const dburl = process.env.ATLASDB_URL;
 
 
   //connecting to database
   async function main() {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dburl);
   }
 
 main()
@@ -83,15 +86,31 @@ main()
   };
 
 
+  const store =MongoStore.create({
+    mongoUrl:dburl,
+    crypto:{
+      secret:process.env.SECRETE,
+    },
+    touchAfter: 24*3600,
+  });
+
+
+  store.on("error" ,()=>{
+    console.log("Error in Mongo session store",err);
+  });
+
+
   const sessionOptions ={
+    store,
     secret : process.env.SECRETE,
     resave : false,
     saveUninitialized: true,
     cookie: {
       expires : Date.now() + 7 * 24 *60 *1000,
       maxAge : 7 * 24 *60 *1000,
-    }
+    },
   };
+
 
   app.use(session(sessionOptions));
 

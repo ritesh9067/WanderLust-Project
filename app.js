@@ -207,10 +207,11 @@ app.post("/signup", userController.signup);
 //   res.send("successful testing");
 // });
 
+const port = process.env.PORT || 10000;
 
 //starting our server
-app.listen(3000, () => {
-  console.log("server is listening to port 3000");
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Example app listening on port ${port}`);
 });
 
 

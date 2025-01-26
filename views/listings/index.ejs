@@ -1,0 +1,88 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    #filters{
+        margin-left: 1rem;
+        display: flex;
+    }
+    .filter{
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 1rem;
+        opacity: 0.7;
+    }
+    .filter:hover{
+        opacity: 1;
+    }
+    .filter{
+        font-size: 0.8rem;
+    }
+</style>
+
+   <div id="filters" >
+    <div class="filter">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>  Trending </p>
+    </div>
+
+    <div class="filter">
+        <div><i class="fa-solid fa-bed"></i></i></div>
+        <p>  Rooms </p>
+    </div>
+
+    <div class="filter">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p> Iconic Cities </p>
+    </div>
+
+    
+    <div class="filter">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>  Mountains </p>
+    </div>
+
+      
+    <div class="filter">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>  Castles </p>
+    </div>
+
+      
+    <div class="filter">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>  Pools </p>
+    </div>
+
+    <div class="filter">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>  Camping </p>
+    </div>
+
+    <div class="filter">
+        <div><i class="fa-solid fa-cow"></i></div>
+        <p>  Farm </p>
+    </div>
+
+   </div>
+
+    <!-- Bootstrap card grid -->
+    <div class="container">
+        <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 mt-3">
+            <% for (let listing of allListings) { %>
+                <a href="listings/<%=listing._id%>" style="text-decoration: none; color: inherit;"> <!-- Wrap the entire card -->
+              <div class="col listing-card">
+              <div class="card" style="height: 100%;"> <!-- given full height card length -->
+                  <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing_image" style="height: 12rem; object-fit: cover;">
+                  <div class="card-img-overlay"> </div> <!--We are using this to hover on image to give white effect-->
+                 <div class="card-body">
+                 <p class="card-text">
+                  <b><%= listing.title %></b>
+                 <br>
+                     &#8377;<%=listing.price.toLocaleString("en-IN")%>/night
+                  </p>
+                  </div>
+               </div>
+           </div>
+            <% } %>
+        </div>
+    </div>

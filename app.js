@@ -60,14 +60,14 @@ app.engine('ejs',ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 
-//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
-const dburl = process.env.ATLASDB_URL;
+//const dburl = process.env.ATLASDB_URL;
 
 
   //connecting to database
   async function main() {
-    await mongoose.connect(dburl);
+    await mongoose.connect(MONGO_URL);
   }
 
 main()
@@ -87,7 +87,7 @@ main()
 
 
   const store =MongoStore.create({
-    mongoUrl:dburl,
+    mongoUrl:MONGO_URL,
     crypto:{
       secret:process.env.SECRETE,
     },
@@ -207,11 +207,11 @@ app.post("/signup", userController.signup);
 //   res.send("successful testing");
 // });
 
-const port = process.env.PORT || 10000;
+
 
 //starting our server
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(3000,  (req,res) => {
+   console.log("listening to port 3000");
 });
 
 
